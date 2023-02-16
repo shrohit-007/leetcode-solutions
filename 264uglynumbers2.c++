@@ -1,17 +1,23 @@
 class Solution {
 public:
+    
     int nthUglyNumber(int n) {
-        long long ans=1;
-        set<long long>st;
-        st.insert(1);
-        for(int i=1;i<=n;i++)
+        vector<int>ugly(n,0);
+        int p1=0,p2=0,p3=0;
+        ugly[0]=1;
+        for(int i=1;i<n;i++)
         {
-            ans=*st.begin();
-            st.insert(2*ans);
-            st.insert(3*ans);
-            st.insert(5*ans);
-            st.erase(st.begin());
+            int num1=ugly[p1]*2;
+            int num2=ugly[p2]*3;
+            int num3=ugly[p3]*5;
+            ugly[i]=min(num1,min(num2,num3));
+            if(num1==ugly[i])
+                p1++;
+            if(num2==ugly[i])
+                p2++;
+            if(num3==ugly[i])
+                p3++;
         }
-        return ans;
+        return ugly[n-1];
     }
 };
